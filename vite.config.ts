@@ -25,9 +25,7 @@ export default defineConfig(({mode}) => {
       rollupOptions: {
         output: {
           manualChunks: {
-            vendor: ['react', 'react-dom', 'react-router-dom'],
-            charts: ['recharts'],
-            ai: ['@google/generative-ai']
+            vendor: ['react', 'react-dom']
           }
         }
       }
