@@ -82,3 +82,113 @@
 .animate-spin-slow {
   animation: spin-slow 8s linear infinite;
 }
+
+/* =============================================
+   FULL RESPONSIVE COMPATIBILITY FOR ALL DEVICES
+   ============================================= */
+
+/* Base Mobile Responsiveness */
+@media (max-width: 768px) {
+  body {
+    @apply overflow-auto;
+  }
+  
+  /* Responsive Typography */
+  h1 { font-size: clamp(1.5rem, 5vw, 2.5rem); }
+  h2 { font-size: clamp(1.25rem, 4vw, 2rem); }
+  h3 { font-size: clamp(1.1rem, 3.5vw, 1.5rem); }
+  p { font-size: clamp(0.875rem, 2.5vw, 1rem); }
+}
+
+/* Tablet (iPad, Surface) 768px - 1024px */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .glass-card {
+    @apply rounded-xl p-4;
+  }
+}
+
+/* Small Mobile (< 640px) */
+@media (max-width: 640px) {
+  .glass-card {
+    @apply rounded-lg p-3 m-2;
+  }
+  
+  .glass-sidebar {
+    @apply w-full h-auto fixed bottom-0 border-t border-r-0 flex-row z-50;
+  }
+  
+  .glass-header {
+    @apply px-3 py-2;
+  }
+  
+  .nav-item-glass {
+    @apply px-3 py-2 gap-2;
+  }
+  
+  /* Table responsiveness */
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  /* Button sizing for touch devices */
+  button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Large Mobile (640px - 768px) */
+@media (min-width: 640px) and (max-width: 768px) {
+  .glass-card {
+    @apply p-4;
+  }
+}
+
+/* Large Desktop / Wide screens */
+@media (min-width: 1280px) {
+  .glass-card {
+    @apply p-6;
+  }
+}
+
+/* Fix for iOS Safari overscroll behavior */
+@supports (-webkit-touch-callout: none) {
+  body {
+    min-height: -webkit-fill-available;
+  }
+  
+  #root {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+  }
+}
+
+/* Prevent text size adjustment on orientation change */
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+/* Prevent zoom on input focus for iOS */
+input,
+textarea,
+select,
+button {
+  font-size: 16px !important;
+  -webkit-appearance: none;
+  border-radius: 8px;
+}
+
+/* Improve touch targets */
+a, button {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Smooth transitions between viewport sizes */
+* {
+  transition: width 0.2s ease, height 0.2s ease, padding 0.2s ease, margin 0.2s ease;
+}
