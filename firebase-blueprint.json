@@ -1,0 +1,128 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "Inventory items in the clothing enterprise",
+      "type": "object",
+      "properties": {
+        "sku": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string", "enum": ["Men", "Women", "Kids"] },
+        "sizes": { "type": "array", "items": { "type": "string" } },
+        "wholesalePrice": { "type": "number" },
+        "retailPrice": { "type": "number" },
+        "stock": { "type": "number" },
+        "minStockAlert": { "type": "number" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["sku", "name", "category", "wholesalePrice", "retailPrice", "stock"]
+    },
+    "Client": {
+      "title": "Client",
+      "description": "Wholesale or retail business clients",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "type": { "type": "string", "enum": ["Wholesale", "Retail"] },
+        "location": { "type": "string" },
+        "phone": { "type": "string" },
+        "creditLimit": { "type": "number" },
+        "balance": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "type"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Sales transactions recorded by shopkeepers",
+      "type": "object",
+      "properties": {
+        "shopkeeperId": { "type": "string" },
+        "shopkeeperName": { "type": "string" },
+        "clientId": { "type": "string" },
+        "clientName": { "type": "string" },
+        "items": { "type": "array" },
+        "total": { "type": "number" },
+        "type": { "type": "string", "enum": ["Wholesale", "Retail"] },
+        "paymentStatus": { "type": "string", "enum": ["Paid", "Partial", "Awaiting"] },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["shopkeeperId", "items", "total", "type", "paymentStatus"]
+    },
+    "Payment": {
+      "title": "Payment",
+      "description": "Payments received from clients",
+      "type": "object",
+      "properties": {
+        "shopkeeperId": { "type": "string" },
+        "clientId": { "type": "string" },
+        "orderId": { "type": "string" },
+        "amount": { "type": "number" },
+        "method": { "type": "string", "enum": ["M-Pesa", "Cash", "Bank"] },
+        "reference": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["shopkeeperId", "clientId", "amount", "method"]
+    },
+    "Log": {
+      "title": "Log",
+      "description": "Audit trail of shopkeeper actions",
+      "type": "object",
+      "properties": {
+        "shopkeeperId": { "type": "string" },
+        "shopkeeperName": { "type": "string" },
+        "action": { "type": "string" },
+        "details": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["shopkeeperId", "action", "timestamp"]
+    },
+    "Insight": {
+      "title": "Insight",
+      "description": "AI-generated business insights",
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "enum": ["alert", "insight", "warn"] },
+        "message": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["type", "message", "timestamp"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "User notifications for system events",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "type": { "type": "string", "enum": ["info", "success", "warning", "error"] },
+        "read": { "type": "boolean" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "title", "message", "type", "read", "timestamp"]
+    },
+    "User": {
+      "title": "User Profile",
+      "description": "User profile and role configuration",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "shop"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email", "role", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": { "schema": "User", "description": "User profile registry" },
+    "/products/{productId}": { "schema": "Product", "description": "Global inventory" },
+    "/clients/{clientId}": { "schema": "Client", "description": "Client database" },
+    "/orders/{orderId}": { "schema": "Order", "description": "Global sales ledger" },
+    "/payments/{paymentId}": { "schema": "Payment", "description": "Payment records" },
+    "/logs/{logId}": { "schema": "Log", "description": "Audit logs" },
+    "/insights/{insightId}": { "schema": "Insight", "description": "AI insights" },
+    "/notifications/{notificationId}": { "schema": "Notification", "description": "User notifications" }
+  }
+}
